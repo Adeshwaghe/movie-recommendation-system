@@ -166,3 +166,4 @@ if st.button("📌 Recommend Movies"):
             st.subheader(f"🍿 Movies similar to '{selected_movie}':")
             for rec in recommendations:
                 st.write(f"- {rec}")
+
