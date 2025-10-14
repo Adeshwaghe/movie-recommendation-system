@@ -5,120 +5,215 @@ import re
 import base64
 
 # -------------------------
-# Set Background Image & Styling
+# Modern Cinematic Styling
 # -------------------------
-# Update the set_background function and add new styling
-
-def set_background(image_file):
-    with open(image_file, "rb") as f:
-        encoded_image = base64.b64encode(f.read()).decode()
-    page_bg_img = f"""
+def set_cinematic_style():
+    cinematic_css = """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600&display=swap');
     
-    .stApp {{
-        background-image: url("data:image/jpg;base64,{encoded_image}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        font-family: 'Poppins', sans-serif;
-    }}
+    .stApp {
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+        font-family: 'Inter', sans-serif;
+    }
     
-    .stMarkdown, .stText {{
-        color: #ffffff !important;
-    }}
-
-    h1, h2, h3, h4, h5, h6 {{
-        font-family: 'Poppins', sans-serif;
-        color: #ffffff !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        letter-spacing: 0.5px;
-    }}
-
-    /* Glass morphism effect for widgets */
-    .stSelectbox, .stMultiselect, .stSlider, .stNumberInput {{
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        border-radius: 12px !important;
-        padding: 10px !important;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    }}
-
-    /* Button styling */
-    .stButton>button {{
-        background: linear-gradient(135deg, #FF6B6B 0%, #FF4B4B 100%);
-        color: white;
+    /* Main header styling */
+    .main-header {
+        text-align: center;
+        padding: 3rem 0 2rem 0;
+        background: linear-gradient(135deg, 
+            rgba(255, 215, 0, 0.1) 0%, 
+            rgba(255, 165, 0, 0.1) 50%, 
+            rgba(255, 69, 0, 0.1) 100%);
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .main-header h1 {
+        font-family: 'Cinzel', serif;
+        font-size: 4rem !important;
         font-weight: 600;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 24px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3);
-    }}
-
-    .stButton>button:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
-    }}
-
-    /* Expander styling */
-    .streamlit-expander {{
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF4500 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+    }
+    
+    .main-header p {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+    
+    /* Modern card styling for expanders and containers */
+    .modern-card {
         background: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 12px !important;
+        backdrop-filter: blur(20px) !important;
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }}
-
-    /* Slider styling */
-    .stSlider div[data-baseweb="slider"] {{
-        background: rgba(255, 255, 255, 0.2) !important;
-    }}
-
-    /* Table styling update */
-    .styled-table {{
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        border-radius: 16px !important;
-        overflow: hidden;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    }}
-
-    .styled-table thead tr {{
-        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
-        color: black !important;
-        font-weight: 600;
-    }}
-
-    .styled-table tbody tr {{
+        border-radius: 20px !important;
+        padding: 25px !important;
+        margin: 15px 0;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
         transition: all 0.3s ease;
-    }}
-
-    .styled-table tbody tr:hover {{
-        background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .modern-card:hover {
+        border: 1px solid rgba(255, 215, 0, 0.3) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px 0 rgba(255, 215, 0, 0.15);
+    }
+    
+    /* Enhanced widget styling */
+    .stSelectbox > div > div, .stMultiselect > div > div {
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 15px !important;
+        color: white !important;
+        font-weight: 400;
+    }
+    
+    .stSlider > div > div {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-radius: 15px !important;
+    }
+    
+    .stNumberInput > div > div {
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 15px !important;
+        color: white !important;
+    }
+    
+    /* Premium button styling */
+    .stButton > button {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%) !important;
+        color: #000 !important;
+        font-weight: 600 !important;
+        border: none !important;
+        border-radius: 15px !important;
+        padding: 12px 30px !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
+        font-size: 1rem !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5) !important;
+        background: linear-gradient(135deg, #FFA500 0%, #FF8C00 50%, #FF6347 100%) !important;
+    }
+    
+    /* Modern table styling */
+    .modern-table {
+        background: rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36) !important;
+    }
+    
+    .modern-table thead tr {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+    }
+    
+    .modern-table tbody tr {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.02) !important;
+    }
+    
+    .modern-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.05) !important;
+    }
+    
+    .modern-table tbody tr:hover {
+        background: rgba(255, 215, 0, 0.1) !important;
         transform: scale(1.01);
-    }}
-
+    }
+    
+    .modern-table th, .modern-table td {
+        padding: 15px 20px !important;
+        text-align: center !important;
+        border: none !important;
+        color: white !important;
+        font-weight: 400 !important;
+    }
+    
+    /* Label styling */
+    .stMarkdown p, .stText {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 500;
+    }
+    
+    /* Expander header styling */
+    .streamlit-expanderHeader {
+        font-size: 1.2rem !important;
+        font-weight: 600 !important;
+        color: #FFD700 !important;
+        background: rgba(255, 215, 0, 0.1) !important;
+        border-radius: 15px !important;
+        padding: 15px 20px !important;
+        margin: 10px 0 !important;
+    }
+    
     /* Custom progress bar */
-    .stProgress > div > div > div > div {{
-        background: linear-gradient(135deg, #FF6B6B 0%, #FF4B4B 100%);
-    }}
+    .stProgress > div > div > div > div {
+        background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+        border-radius: 10px;
+    }
+    
+    /* Section headers */
+    .section-header {
+        font-family: 'Cinzel', serif;
+        font-size: 2rem !important;
+        color: #FFD700 !important;
+        text-align: center;
+        margin: 2rem 0 1rem 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Movie card styling for recommendations */
+    .movie-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 20px;
+        margin: 15px 0;
+        transition: all 0.3s ease;
+    }
+    
+    .movie-card:hover {
+        border: 1px solid rgba(255, 215, 0, 0.4);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+    }
     </style>
     """
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Update the title display with emoji and subtitle
-st.markdown("""
-    <div style='text-align: center; padding: 2rem 0;'>
-        <h1 style='font-size: 3rem; margin-bottom: 0.5rem;'>🎬 Movie Buddy</h1>
-        <p style='font-size: 1.2rem; opacity: 0.9;'>Your Personal Movie Recommendation System</p>
-    </div>
-""", unsafe_allow_html=True)
-
-# Rest of your existing code remains the same...
+    st.markdown(cinematic_css, unsafe_allow_html=True)
 
 # -------------------------
-# Load Data
+# Updated Header with Modern Design
+# -------------------------
+def show_modern_header():
+    st.markdown("""
+        <div class="main-header">
+            <h1>🎬 Movie Buddy</h1>
+            <p>Your Personal Cinematic Recommendation Engine</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+# -------------------------
+# Load Data (unchanged)
 # -------------------------
 @st.cache_data
 def load_data():
@@ -145,7 +240,7 @@ def load_data():
 movies, ratings, merged_data = load_data()
 
 # -------------------------
-# Bayesian Scoring
+# Bayesian Scoring (unchanged)
 # -------------------------
 def compute_bayesian_scores(df, all_ratings_df, m_value=None):
     global_mean = all_ratings_df["rating"].mean()
@@ -165,34 +260,34 @@ def recommend_movies_bayesian(filtered_movies_df, all_ratings_df, top_n=5, exclu
     return candidates_sorted.head(top_n)[["title","genres","year","avg_rating","rating_count","bayes_score"]]
 
 # -------------------------
-# Styled HTML Table Function
+# Modern Styled Table Function
 # -------------------------
-def show_styled_table(df, show_bayes=False):
+def show_modern_table(df, show_bayes=False):
     if show_bayes:
         df = df[["title","genres","year","avg_rating","rating_count","bayes_score"]].copy()
     else:
         df = df[["title","genres","year","avg_rating","rating_count"]].copy()
     
     rename_dict = {
-        "title":"Title",
-        "genres":"Genres",
-        "year":"Year",
-        "avg_rating":"Avg Rating",
-        "rating_count":"No. of Ratings",
+        "title":"🎬 Title",
+        "genres":"🎭 Genres",
+        "year":"📅 Year",
+        "avg_rating":"⭐ Avg Rating",
+        "rating_count":"📊 Rating Count",
     }
     if show_bayes:
-        rename_dict["bayes_score"] = "Bayes Score"
+        rename_dict["bayes_score"] = "🎯 Bayes Score"
     df.rename(columns=rename_dict, inplace=True)
     
     df = df.reset_index(drop=True)
-    df["Sr No"] = df.index + 1
+    df["#"] = df.index + 1
     
-    cols_order = ["Sr No", "Title", "Genres", "Year", "Avg Rating", "No. of Ratings"]
+    cols_order = ["#", "🎬 Title", "🎭 Genres", "📅 Year", "⭐ Avg Rating", "📊 Rating Count"]
     if show_bayes:
-        cols_order.append("Bayes Score")
+        cols_order.append("🎯 Bayes Score")
     df = df[cols_order]
 
-    table_html = '<table class="styled-table">'
+    table_html = '<table class="modern-table">'
     table_html += '<thead><tr>'
     for col in df.columns:
         table_html += f'<th>{col}</th>'
@@ -200,8 +295,7 @@ def show_styled_table(df, show_bayes=False):
     
     table_html += '<tbody>'
     for i, row in df.iterrows():
-        bg_color = '#f5f5f5' if i % 2 == 0 else 'rgba(245,245,245,0.95)'
-        table_html += f'<tr style="background-color:{bg_color}">'
+        table_html += '<tr>'
         for col in df.columns:
             val = row[col]
             if isinstance(val, float):
@@ -210,124 +304,141 @@ def show_styled_table(df, show_bayes=False):
         table_html += '</tr>'
     table_html += '</tbody></table>'
 
-    st.markdown("""
-        <style>
-        .styled-table {
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-            font-family: sans-serif;
-            min-width: 500px;
-            width: 100%;
-            border-radius: 8px 8px 0 0;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-        .styled-table thead tr {
-            background-color: #FFD700;
-            color: black;
-            font-weight: bold;
-            text-align: center;
-        }
-        .styled-table th, .styled-table td {
-            padding: 10px 15px;
-            color:black;
-            text-align: center;
-        }
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #FFD700;
-        }
-        </style>
-    """, unsafe_allow_html=True)
     st.markdown(table_html, unsafe_allow_html=True)
 
 # -------------------------
-# Streamlit UI
+# Modern Streamlit UI
 # -------------------------
-st.title("🎬 Movie Recommendation System")
 
-# Genre filter
-with st.expander("🎭 **Select Genre(s)**", expanded=True):
-    all_genres = sorted(set(genre for genres in movies["genres"].dropna() for genre in genres.split("|")))
-    selected_genres = st.multiselect("Choose Genres:", options=all_genres, default=[])
+# Apply cinematic styling
+set_cinematic_style()
+show_modern_header()
 
-# Year filter
-col1, col2 = st.columns(2)
-with col1:
-    year_min, year_max = int(movies["year"].min()), int(movies["year"].max())
-    year_min_input = st.number_input("Min Year:", min_value=year_min, max_value=year_max, value=year_min)
-with col2:
-    year_max_input = st.number_input("Max Year:", min_value=year_min, max_value=year_max, value=year_max)
-selected_year_range = st.slider("Select Year Range:", min_value=year_min, max_value=year_max, value=(year_min_input, year_max_input))
-filtered_movies = movies[(movies["year"] >= selected_year_range[0]) & (movies["year"] <= selected_year_range[1])]
+# Main container with modern card styling
+with st.container():
+  
+    
+    st.markdown('<h2 class="section-header">🎭 Filter Movies</h2>', unsafe_allow_html=True)
+    
+    # Genre filter in expander
+    with st.expander("🎭 **Select Genre(s)**", expanded=True):
+        all_genres = sorted(set(genre for genres in movies["genres"].dropna() for genre in genres.split("|")))
+        selected_genres = st.multiselect("Choose Genres:", options=all_genres, default=[],
+                                       help="Select one or multiple genres to filter movies")
 
-# Rating filter
-col3, col4 = st.columns(2)
-with col3:
-    min_rating, max_rating = float(movies["avg_rating"].min()), float(movies["avg_rating"].max())
-    rating_min_input = st.number_input("Min Rating:", min_value=min_rating, max_value=max_rating, value=min_rating, step=0.1)
-with col4:
-    rating_max_input = st.number_input("Max Rating:", min_value=min_rating, max_value=max_rating, value=max_rating, step=0.1)
-selected_rating_range = st.slider("Select Rating Range:", min_value=min_rating, max_value=max_rating, value=(rating_min_input, rating_max_input))
-filtered_movies = filtered_movies[(filtered_movies["avg_rating"] >= selected_rating_range[0]) & (filtered_movies["avg_rating"] <= selected_rating_range[1])]
+    # Year and Rating filters in columns
+    col1, col2 = st.columns(2)
+    with col1:
+        year_min, year_max = int(movies["year"].min()), int(movies["year"].max())
+        selected_year_range = st.slider("📅 Select Year Range:", 
+                                      min_value=year_min, 
+                                      max_value=year_max, 
+                                      value=(1980, year_max))
 
-# Apply genre filter
-if selected_genres:
-    def has_genres(genres_str, selected):
-        if pd.isna(genres_str):
-            return False
-        genres = genres_str.split("|")
-        return all(g in genres for g in selected)
-    filtered_movies = filtered_movies[filtered_movies["genres"].apply(lambda x: has_genres(x, selected_genres))]
+    with col2:
+        min_rating, max_rating = float(movies["avg_rating"].min()), float(movies["avg_rating"].max())
+        selected_rating_range = st.slider("⭐ Select Rating Range:", 
+                                        min_value=min_rating, 
+                                        max_value=max_rating, 
+                                        value=(3.0, max_rating),
+                                        step=0.1)
 
-# Movie title filter
-movie_titles = sorted(filtered_movies["title"].unique())
-movie_titles.insert(0, "All")
-selected_title = st.selectbox("🎬 Select a Movie Title:", movie_titles)
-if selected_title != "All":
-    filtered_movies = filtered_movies[filtered_movies["title"] == selected_title]
+    # Apply filters
+    filtered_movies = movies[
+        (movies["year"] >= selected_year_range[0]) & 
+        (movies["year"] <= selected_year_range[1]) &
+        (movies["avg_rating"] >= selected_rating_range[0]) & 
+        (movies["avg_rating"] <= selected_rating_range[1])
+    ]
 
-# Show recommendations
-available_titles = sorted(filtered_movies["title"].unique())
-base_movie = st.selectbox("🎬 Exclude a movie from recommendations:", ["None"] + available_titles)
-if base_movie == "None":
-    base_movie = None
-num_rec = st.slider("Number of recommendations to show:", 1, 20, 5)
+    # Genre filter application
+    if selected_genres:
+        def has_genres(genres_str, selected):
+            if pd.isna(genres_str):
+                return False
+            genres = genres_str.split("|")
+            return all(g in genres for g in selected)
+        filtered_movies = filtered_movies[filtered_movies["genres"].apply(lambda x: has_genres(x, selected_genres))]
 
-# Pre-calculate global C and m
-C = merged_data["rating"].mean()
-counts = merged_data.groupby("movieId")["rating"].count()
-m = int(counts.quantile(0.75))
+    # Movie selection
+    col3, col4 = st.columns(2)
+    with col3:
+        movie_titles = sorted(filtered_movies["title"].unique())
+        selected_title = st.selectbox("🎬 Select a Movie:", ["All"] + movie_titles,
+                                    help="Choose a specific movie or 'All' to see all filtered movies")
+        
+        if selected_title != "All":
+            filtered_movies = filtered_movies[filtered_movies["title"] == selected_title]
 
-if st.button("🎯 Show Recommendations"):
-    recs = recommend_movies_bayesian(filtered_movies, merged_data, top_n=num_rec, exclude_title=base_movie)
-    if recs.empty:
-        st.error("No recommendations available. Try widening the filters.")
-    else:
-        st.subheader(f"🍿 Top {len(recs)} recommendations:")
+    with col4:
+        available_titles = sorted(filtered_movies["title"].unique())
+        base_movie = st.selectbox("🚫 Exclude from recommendations:", ["None"] + available_titles,
+                                help="Choose a movie to exclude from recommendations")
+        if base_movie == "None":
+            base_movie = None
 
-        # Info expander for Bayes Score with actual C and m
-        with st.expander("ℹ️ How Bayes Score is calculated"):
-            st.markdown(f"""
-            <div style="color:black; font-size:14px;">
-            <b>Bayesian Average Formula:</b><br>
-            <code>Bayes Score = (v / (v + m)) * R + (m / (v + m)) * C</code><br><br>
-            
-            Where:<br>
-            - <b>v</b> = Number of ratings for the movie (<i>rating_count</i>)<br>
-            - <b>R</b> = Average rating of the movie (<i>avg_rating</i>)<br>
-            - <b>C</b> = Global mean rating of all movies = <b>{C:.2f}</b><br>
-            - <b>m</b> = Minimum number of ratings to be considered = <b>{m}</b> (75th percentile of all movie rating counts)<br><br>
-            
-            This ensures movies with very few ratings are not unfairly ranked too high or too low.
-            </div>
-            """, unsafe_allow_html=True)
+    # Number of recommendations
+    num_rec = st.slider("🔢 Number of recommendations:", 1, 20, 5, 
+                       help="Adjust how many movie recommendations to display")
 
-        show_styled_table(recs, show_bayes=True)
-        st.markdown("**Recommended Titles:**")
-        for _, row in recs.iterrows():
-            st.write(f"- {row['title']} — Bayes score: {row['bayes_score']:.3f} — Avg Rating: {row['avg_rating']:.2f} ({int(row['rating_count'])} ratings)")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-if st.button("📌 Show Filtered Movies Only"):
-    st.subheader("🎞️ All Filtered Movies")
-    show_styled_table(filtered_movies.sort_values("title"), show_bayes=False)
+
+col5, col6 = st.columns(2)
+with col5:
+    if st.button("🎯 Get Smart Recommendations", use_container_width=True):
+        if filtered_movies.empty:
+            st.error("No movies match your filters. Please adjust your criteria.")
+        else:
+            recs = recommend_movies_bayesian(filtered_movies, merged_data, top_n=num_rec, exclude_title=base_movie)
+            if recs.empty:
+                st.error("No recommendations available. Try widening your filters.")
+            else:
+                st.markdown(f'<h2 class="section-header">🍿 Top {len(recs)} Recommendations</h2>', unsafe_allow_html=True)
+                
+                # Bayes score explanation
+                with st.expander("ℹ️ How Recommendations Work", expanded=False):
+                    C = merged_data["rating"].mean()
+                    counts = merged_data.groupby("movieId")["rating"].count()
+                    m = int(counts.quantile(0.75))
+                    
+                    st.markdown(f"""
+                    <div style="color:white; font-size:14px; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+                    <h4 style="color:#FFD700; margin-bottom: 10px;">🎯 Bayesian Scoring Algorithm</h4>
+                    <b>Formula:</b> <code>Bayes Score = (v / (v + m)) × R + (m / (v + m)) × C</code><br><br>
+                    
+                    <b>Where:</b><br>
+                    • <b>v</b> = Number of ratings for the movie<br>
+                    • <b>R</b> = Average rating of the movie<br>
+                    • <b>C</b> = Global mean rating = <b>{C:.2f}</b><br>
+                    • <b>m</b> = Minimum ratings threshold = <b>{m}</b><br><br>
+                    
+                    This ensures fair ranking for movies with different numbers of ratings.
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                show_modern_table(recs, show_bayes=True)
+
+with col6:
+    if st.button("📋 Show Filtered Movies", use_container_width=True):
+        st.markdown('<h2 class="section-header">🎞️ Filtered Movies</h2>', unsafe_allow_html=True)
+        show_modern_table(filtered_movies.sort_values("avg_rating", ascending=False), show_bayes=False)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Stats section
+if not filtered_movies.empty:
+    st.markdown('<div class="modern-card">', unsafe_allow_html=True)
+    st.markdown('<h3 class="section-header">📊 Quick Stats</h3>', unsafe_allow_html=True)
+    
+    col7, col8, col9, col10 = st.columns(4)
+    with col7:
+        st.metric("Total Movies", len(filtered_movies))
+    with col8:
+        st.metric("Average Rating", f"{filtered_movies['avg_rating'].mean():.2f}")
+    with col9:
+        st.metric("Year Range", f"{filtered_movies['year'].min()}-{filtered_movies['year'].max()}")
+    with col10:
+        st.metric("Top Genre", filtered_movies['genres'].str.split('|').explode().mode().iloc[0] if not filtered_movies.empty else "N/A")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
