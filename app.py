@@ -370,7 +370,7 @@ with st.container():
         if selected_title != "All":
             filtered_movies = filtered_movies[filtered_movies["title"] == selected_title]
 
-    with col4:
+    with col44:
         available_titles = sorted(filtered_movies["title"].unique())
         base_movie = st.selectbox("🚫 Exclude from recommendations:", ["None"] + available_titles,
                                 help="Choose a movie to exclude from recommendations")
